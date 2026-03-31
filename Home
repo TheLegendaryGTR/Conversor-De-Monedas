@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+#define USD_TO_GTQ 7.8   // 1 USD = 7.8 GTQ
+#define USD_TO_EUR 0.92  // 1 USD = 0.92 EUR
+
+double convertir(char origen[], char destino[], double cantidad) {
+    double cantidadUSD;
+
+    // Convertir primero a USD
+    if (strcmp(origen, "USD") == 0) {
+        cantidadUSD = cantidad;
+    } else if (strcmp(origen, "GTQ") == 0) {
+        cantidadUSD = cantidad / USD_TO_GTQ;
+    } else if (strcmp(origen, "EUR") == 0) {
+        cantidadUSD = cantidad / USD_TO_EUR;
+    } else {
+        return -1; // Moneda no válida
+    }
+
+    // Convertir de USD a destino
+    if (strcmp(destino, "USD") == 0) {
+        return cantidadUSD;
+    } else if (strcmp(destino, "GTQ") == 0) {
+        return cantidadUSD * USD_TO_GTQ;
+    } else if (strcmp(destino, "EUR") == 0) {
+        return cantidadUSD * USD_TO_EUR;
+    } else {
+        return -1; // Moneda no válida
+    }
+}
+
+int main() {
+    char origen[4], destino[4];
+    double cantidad, resultado;
+
+    printf("=== Conversor de Monedas ===\n");
+    printf("Opciones: USD, GTQ, EUR\n");
+
+    printf("Ingrese la moneda de origen: ");
+    scanf("%s", origen);
+
+    printf("Ingrese la moneda de destino: ");
+    scanf("%s", destino);
+
+    printf("Ingrese la cantidad: ");
+    scanf("%lf", &cantidad);
+
+    resultado = convertir(origen, destino, cantidad);
+
+    if (resultado >= 0) {
+        printf("%.2f %s = %.2f %s\n", cantidad, origen, resultado, destino);
+    } else {
+        printf("Conversión no válida.\n");
+    }
+
+    return 0;
+}
